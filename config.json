@@ -1,0 +1,5 @@
+{
+    "useRemoteHost": false,
+    "permanentLocalStorage": "/home/webstuff/permanentStore",
+    "tempStorageDeletionSizeLimitInMB": 3
+}

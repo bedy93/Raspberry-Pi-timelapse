@@ -41,10 +41,10 @@ fi
 
 echo '...checking whether everything was saved' 
 onlyInTemporaryDir=$(diff -r ./temporaryStorage/ $permanentLocalStorage | grep 'Only in ./temporaryStorage/:')
-echo $onlyInTemporaryDir
 if [[ -z $onlyInTemporaryDir ]]
 then
     echo 'Everything was saved. Deleting ./temporaryStorage'
+    rm -r ./temporaryStorage
 else
     echo 'Somthing cannot be saved. Exiting...'
 fi

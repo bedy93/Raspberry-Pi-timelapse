@@ -1,5 +1,6 @@
 {
-    "useRemoteHost": false,
+    "useRemoteHost": true,
+    "remoteHost": "example.ddns.net",
     "permanentLocalStorage": "/home/webstuff/permanentStore",
     "tempStorageDeletionSizeLimitInMB": 3
 }

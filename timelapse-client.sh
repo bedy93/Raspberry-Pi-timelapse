@@ -19,4 +19,14 @@ then
         echo 'Copying files from ./temporaryStorage/ to ' $permanentLocalStorage
         cp -a ./temporaryStorage/. $permanentLocalStorage
     fi
+elif [[ $(jq -r .useRemoteHost config.json) == "true" ]]
+then
+    remoteHost=$(jq -r .remoteHost config.json)
+    if [[ $remoteHost == "null" ]]
+    then
+        echo 'You need to define remoteHost in config.json. Exiting...'
+        exit 1
+    else
+        echo 'Copying files from ./temporaryStorage/ to ' $remoteHost
+    fi
 fi

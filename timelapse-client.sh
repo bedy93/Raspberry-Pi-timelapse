@@ -4,7 +4,7 @@ mkdir -p -v ./temporaryStorage/
 
 fileName=./temporaryStorage/$(date '+%Y-%m-%d-%H-%M-%S').jpg
 
-echo 'Saving picture at' $fileName 
+echo 'Saving picture at' $fileName
 touch $fileName
 
 if [[ $(jq -r .useRemoteHost config.json) == "false" ]]

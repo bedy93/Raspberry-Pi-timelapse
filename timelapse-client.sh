@@ -22,11 +22,13 @@ then
 elif [[ $(jq -r .useRemoteHost config.json) == "true" ]]
 then
     remoteHost=$(jq -r .remoteHost config.json)
-    if [[ $remoteHost == "null" ]]
+    remoteHostUserName=$(jq -r .remoteHostUserName config.json)
+    if [[ $remoteHost == "null" ]] || [[ $remoteHostUserName == "null" ]]
     then
-        echo 'You need to define remoteHost in config.json. Exiting...'
+        echo 'You need to define remoteHost and remoteHostUserName in config.json. Exiting...'
         exit 1
     else
-        echo 'Copying files from ./temporaryStorage/ to ' $remoteHost
+        echo 'Copying files from ./temporaryStorage/ to ' $remoteHostUserName@$remoteHost/permanentTimelapseStorage
+        $(rsync -e "ssh -i $remoteHostUserName" ./temporaryStorage/* $remoteHostUserName@$remoteHost:permanentTimelapseStorage)
     fi
 fi

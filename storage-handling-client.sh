@@ -15,8 +15,9 @@ fi
 
 echo 'Cheking size of ./temporaryStorage'
 directorySize=$(du -s ./temporaryStorage | grep -o '[0-9]\+')
-echo 'TemporaryStorage size:' $directorySize
-echo 'Directory deletion threshold :' $tempStorageDeletionSizeLimitInMB
+directorySize=$(expr $directorySize / 1000)
+echo 'TemporaryStorage size:' $directorySize 'MB'
+echo 'Directory deletion threshold :' $tempStorageDeletionSizeLimitInMB 'MB'
 
 if [ $tempStorageDeletionSizeLimitInMB -gt $directorySize ]
 then
@@ -24,7 +25,7 @@ then
     exit 0
 fi
 
-echo 'Saving everythin before deletion...'
+echo 'Saving everything before deletion...'
 if [[ $(jq -r .useRemoteHost config.json) == "false" ]]
 then
     permanentLocalStorage=$(jq -r .permanentLocalStorage config.json)

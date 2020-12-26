@@ -5,7 +5,7 @@ mkdir -p -v ./temporaryStorage/
 fileName=./temporaryStorage/$(date '+%Y-%m-%d-%H-%M-%S').jpg
 
 echo 'Saving picture at' $fileName
-touch $fileName
+raspistill -o $fileName
 
 if [[ $(jq -r .useRemoteHost config.json) == "false" ]]
 then
@@ -29,6 +29,6 @@ then
         exit 1
     else
         echo 'Copying files from ./temporaryStorage/ to ' $remoteHostUserName@$remoteHost/permanentTimelapseStorage
-        $(rsync -e "ssh -i $remoteHostUserName" ./temporaryStorage/* $remoteHostUserName@$remoteHost:permanentTimelapseStorage)
+        $(rsync -a -e "ssh -i $remoteHostUserName" ./temporaryStorage/ $remoteHostUserName@$remoteHost:permanentTimelapseStorage)
     fi
 fi

@@ -38,14 +38,47 @@ then
         echo 'Copying files from ./temporaryStorage/ to ' $permanentLocalStorage
         cp -a ./temporaryStorage/. $permanentLocalStorage
     fi
+elif [[ $(jq -r .useRemoteHost config.json) == "true" ]]
+then
+    remoteHost=$(jq -r .remoteHost config.json)
+    remoteHostUserName=$(jq -r .remoteHostUserName config.json)
+    if [[ $remoteHost == "null" ]] || [[ $remoteHostUserName == "null" ]]
+    then
+        echo 'You need to define remoteHost and remoteHostUserName in config.json. Exiting...'
+        exit 1
+    else
+        echo 'Copying files from ./temporaryStorage/ to ' $remoteHostUserName@$remoteHost/permanentTimelapseStorage
+        $(rsync -a -e "ssh -i $remoteHostUserName" ./temporaryStorage/ $remoteHostUserName@$remoteHost:permanentTimelapseStorage)
+    fi
 fi
 
-echo '...checking whether everything was saved' 
-onlyInTemporaryDir=$(diff -r ./temporaryStorage/ $permanentLocalStorage | grep 'Only in ./temporaryStorage/:')
-if [[ -z $onlyInTemporaryDir ]]
+echo '...checking whether everything was saved'
+if [[ $(jq -r .useRemoteHost config.json) == "false" ]]
 then
-    echo 'Everything was saved. Deleting ./temporaryStorage'
-    rm -r ./temporaryStorage
-else
-    echo 'Somthing cannot be saved. Exiting...'
+    onlyInTemporaryDir=$(diff -r ./temporaryStorage/ $permanentLocalStorage | grep 'Only in ./temporaryStorage/:')
+    if [[ -z $onlyInTemporaryDir ]]
+    then
+        echo 'Everything was saved. Deleting ./temporaryStorage'
+        rm -r ./temporaryStorage
+    else
+        echo 'Somthing cannot be saved. Exiting...'
+    fi
+elif [[ $(jq -r .useRemoteHost config.json) == "true" ]]
+then
+    remoteHost=$(jq -r .remoteHost config.json)
+    remoteHostUserName=$(jq -r .remoteHostUserName config.json)
+    if [[ $remoteHost == "null" ]] || [[ $remoteHostUserName == "null" ]]
+    then
+        echo 'You need to define remoteHost and remoteHostUserName in config.json. Exiting...'
+        exit 1
+    else
+        onlyInTemporaryDir=$(rsync -a -e "ssh -i $remoteHostUserName" -rin ./temporaryStorage/ $remoteHostUserName@$remoteHost:permanentTimelapseStorage)
+        if [[ -z $onlyInTemporaryDir ]]
+        then
+            echo 'Everything was saved. Deleting ./temporaryStorage'
+            rm -r ./temporaryStorage
+        else
+            echo 'Somthing cannot be saved. Exiting...'
+        fi
+    fi
 fi

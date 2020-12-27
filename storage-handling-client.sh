@@ -58,10 +58,10 @@ then
     onlyInTemporaryDir=$(diff -r ./temporaryStorage/ $permanentLocalStorage | grep 'Only in ./temporaryStorage/:')
     if [[ -z $onlyInTemporaryDir ]]
     then
-        echo 'Everything was saved. Deleting ./temporaryStorage'
+        echo 'Everything was saved locally. Deleting ./temporaryStorage'
         rm -r ./temporaryStorage
     else
-        echo 'Somthing cannot be saved. Exiting...'
+        echo 'Somthing cannot be saved locally. Exiting...'
     fi
 elif [[ $(jq -r .useRemoteHost config.json) == "true" ]]
 then
@@ -75,10 +75,10 @@ then
         onlyInTemporaryDir=$(rsync -a -e "ssh -i $remoteHostUserName" -rin ./temporaryStorage/ $remoteHostUserName@$remoteHost:permanentTimelapseStorage)
         if [[ -z $onlyInTemporaryDir ]]
         then
-            echo 'Everything was saved. Deleting ./temporaryStorage'
+            echo 'Everything was saved remotely. Deleting ./temporaryStorage'
             rm -r ./temporaryStorage
         else
-            echo 'Somthing cannot be saved. Exiting...'
+            echo 'Somthing cannot be saved remotely. Exiting...'
         fi
     fi
 fi

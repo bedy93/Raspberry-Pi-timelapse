@@ -18,8 +18,8 @@ then
         mkdir -p -v $permanentLocalStorage
         echo 'Copying files from ./temporaryStorage/ to ' $permanentLocalStorage
         cp -a ./temporaryStorage/. $permanentLocalStorage
-	echo 'Finished. Exiting...'
-	exit 0
+        echo 'Finished. Exiting...'
+        exit 0
     fi
 elif [[ $(jq -r .useRemoteHost config.json) == "true" ]]
 then
@@ -32,7 +32,7 @@ then
     else
         echo 'Copying files from ./temporaryStorage/ to ' $remoteHostUserName@$remoteHost/permanentTimelapseStorage
         $(rsync -a -e "ssh -i $remoteHostUserName" ./temporaryStorage/ $remoteHostUserName@$remoteHost:permanentTimelapseStorage)
-  	echo 'Finished. Exiting...'
+        echo 'Finished. Exiting...'
         exit 0 
     fi
 fi

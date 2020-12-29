@@ -37,7 +37,7 @@ then
         mkdir -p -v $permanentLocalStorage
         echo 'Copying files from ./temporaryStorage/ to ' $permanentLocalStorage
         cp -a ./temporaryStorage/. $permanentLocalStorage
-	echo 'Finished. Exiting...'
+        echo 'Finished. Exiting...'
         exit 0
     fi
 elif [[ $(jq -r .useRemoteHost config.json) == "true" ]]
@@ -51,7 +51,7 @@ then
     else
         echo 'Copying files from ./temporaryStorage/ to ' $remoteHostUserName@$remoteHost/permanentTimelapseStorage
         $(rsync -a -e "ssh -i $remoteHostUserName" ./temporaryStorage/ $remoteHostUserName@$remoteHost:permanentTimelapseStorage)
-	echo 'Finished.'
+        echo 'Finished.'
         fi
 fi
 
@@ -63,11 +63,11 @@ then
     then
         echo 'Everything was saved locally. Deleting ./temporaryStorage'
         rm -r ./temporaryStorage
-	echo 'Finished. Exiting...'
+        echo 'Finished. Exiting...'
         exit 0
     else
         echo 'Something cannot be saved locally. Exiting...'
-	exit 1
+        exit 1
     fi
 elif [[ $(jq -r .useRemoteHost config.json) == "true" ]]
 then
@@ -83,7 +83,7 @@ then
         then
             echo 'Everything was saved remotely. Deleting ./temporaryStorage'
             rm -r ./temporaryStorage
-	    echo 'Finished. Exiting...'
+            echo 'Finished. Exiting...'
             exit 0
         else
             echo 'Something cannot be saved remotely. Exiting...'

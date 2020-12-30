@@ -20,7 +20,7 @@ echo "Sunset for location $location: $sunset"
 currentTime=$(date +%H%M)
 echo "Current time: $currentTime"
 # Checking whether sun is up, to avoid dark images. 1 hour offset is used.
-if [[ $currentTime -lt $((10#${sunrise//:} - 100)) || $currentTime -gt $((10#${sunset//:} + 100)) ]];
+if [[ 10#$currentTime -lt $((10#${sunrise//:} - 100)) || 10#$currentTime -gt $((10#${sunset//:} + 100)) ]];
 then
     echo 'It is night. Exiting...'
     exit 0

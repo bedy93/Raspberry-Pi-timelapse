@@ -3,5 +3,7 @@
     "remoteHost": "example.ddns.net",
     "remoteHostUserName": "example",
     "permanentLocalStorage": "/home/webstuff/permanentStore",
-    "tempStorageDeletionSizeLimitInMB": 3
+    "tempStorageDeletionSizeLimitInMB": 3,
+    "createTimelapseOnlyDurinDayTime": false,
+    "locationCode": "HUXX0017"
 }

@@ -33,7 +33,7 @@ then
         exit 1
     else
         echo 'Saving image remotely at' $remoteHostUserName@$remoteHost/permanentTimelapseStorage
-        resultOfUploading=$(raspistill -o - | ssh -i $remoteHostUserName $remoteHostUserName@$remoteHost 'cat > ~/permanentTimelapseStorage/$(date '+%Y-%m-%d-%H-%M-%S').jpg' 2>&1 >/dev/null) 
+        resultOfUploading=$(raspistill -o - | ssh -i $remoteHostUserName $remoteHostUserName@$remoteHost 'cat > ~/permanentTimelapseStorage/'$(date '+%Y-%m-%d-%H-%M-%S')'.jpg' 2>&1 >/dev/null)
         echo $resultOfUploading
         if [[ $resultOfUploading ]]
         then
@@ -42,6 +42,6 @@ then
             raspistill -o $fileName
         fi
         echo 'Finished. Exiting...'
-        exit 0 
+        exit 0
     fi
 fi

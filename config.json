@@ -4,5 +4,6 @@
     "remoteHostUserName": "example",
     "permanentLocalStorage": "/home/webstuff/permanentStore",
     "createTimelapseOnlyDurinDayTime": false,
+    "timelapseVideoResolution": "800x600",
     "locationCode": "HUXX0017"
 }

@@ -1,3 +1,6 @@
 #!/bin/bash
 
-cd ../permanentTimelapseStorage && ffmpeg -y -framerate 10 -pattern_type glob -i '*.jpg' -c:v libx264 -s 800x600 out.mp4
+resolution=$(jq -r .timelapseVideoResolution config.json)
+
+cd ../permanentTimelapseStorage && ffmpeg -y -framerate 10 -pattern_type glob -i '*.jpg' -c:v libx264 -s $resolution out.mp4
+

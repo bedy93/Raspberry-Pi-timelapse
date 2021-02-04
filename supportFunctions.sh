@@ -18,6 +18,13 @@ exitAtNightTime()
     local sunrise=$(date --date="$SUNR" +%R)
     local sunset=$(date --date="$SUNS" +%R)
 
+    if [[ $sunrise == "00:00" || $sunset == "00:00" ]]
+    then
+        echo "Cannot determine proper sunrise or sunset time. Using default values"
+	sunrise="06:00"
+	sunset="18:00"
+    fi
+
     # Use $sunrise and $sunset variables to fit your needs. Example:
     echo "Sunrise for location $location: $sunrise"
     echo "Sunset for location $location: $sunset"

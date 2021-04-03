@@ -7,7 +7,7 @@ then
     exitAtNightTime $locationCode 100
 fi
 
-mkdir -p -v ./temporaryStorage/
+mkdir -p -v ./temporaryStorage/$(date '+%Y-%m-%d')
 
 if [[ $(jq -r .useRemoteHost config.json) == "false" ]]
 then
@@ -33,11 +33,11 @@ then
         exit 1
     else
         echo 'Saving image remotely at' $remoteHostUserName@$remoteHost/permanentTimelapseStorage
-        resultOfUploading=$(raspistill -o - | ssh -i $remoteHostUserName $remoteHostUserName@$remoteHost 'cat > ~/permanentTimelapseStorage/'$(date '+%Y-%m-%d-%H-%M-%S')'.jpg' 2>&1 >/dev/null)
+        resultOfUploading=$(raspistill -o - | ssh -i $remoteHostUserName $remoteHostUserName@$remoteHost 'mkdir -p -v ~/permanentTimelapseStorage/$(date '+%Y-%m-%d'); cat > ~/permanentTimelapseStorage/$(date '+%Y-%m-%d')/'$(date '+%Y-%m-%d-%H-%M-%S')'.jpg' 2>&1 >/dev/null)
         echo $resultOfUploading
         if [[ $resultOfUploading ]]
         then
-            fileName=./temporaryStorage/$(date '+%Y-%m-%d-%H-%M-%S').jpg
+            fileName=./temporaryStorage/$(date '+%Y-%m-%d')/$(date '+%Y-%m-%d-%H-%M-%S').jpg
             echo 'Saving image to remote host was not successful. Saving it locally at' $fileName
             raspistill -o $fileName
         fi

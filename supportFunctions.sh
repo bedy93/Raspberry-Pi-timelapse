@@ -20,9 +20,13 @@ exitAtNightTime()
 
     if [[ $sunrise == "00:00" || $sunset == "00:00" ]]
     then
-        echo "Cannot determine proper sunrise or sunset time. Using default values"
-	sunrise="06:00"
-	sunset="18:00"
+        echo "Cannot determine proper sunrise or sunset time. Using cached values"
+        sunrise=$(jq -r .cachedSunriseTime config.json)
+        sunset=$(jq -r .cachedSunsetTime config.json)
+    else
+        echo "Caching valid sunrise, sunset values"
+        echo "$( jq --arg a "$sunrise" '.cachedSunriseTime = $a' config.json )" > config.json #Input has to be provided via --arg
+        echo "$( jq --arg a "$sunset" '.cachedSunsetTime = $a' config.json )" > config.json #It's not possible to simply write .cachedSunsetTime = $sunset
     fi
 
     # Use $sunrise and $sunset variables to fit your needs. Example:

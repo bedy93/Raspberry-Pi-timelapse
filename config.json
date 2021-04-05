@@ -1,9 +1,11 @@
 {
-    "useRemoteHost": true,
-    "remoteHost": "example.ddns.net",
-    "remoteHostUserName": "example",
-    "permanentLocalStorage": "/home/webstuff/permanentStore",
-    "createTimelapseOnlyDurinDayTime": false,
-    "timelapseVideoResolution": "800x600",
-    "locationCode": "HUXX0017"
+  "useRemoteHost": true,
+  "remoteHost": "example.ddns.net",
+  "remoteHostUserName": "example",
+  "permanentLocalStorage": "/home/webstuff/permanentStore",
+  "createTimelapseOnlyDurinDayTime": true,
+  "timelapseVideoResolution": "800x600",
+  "locationCode": "HUXX0017",
+  "cachedSunriseTime": "06:00",
+  "cachedSunsetTime": "18:00"
 }
